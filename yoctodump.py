@@ -112,15 +112,30 @@ def __get_modules():
 		mod = mod.nextModule()
 	return modules
 
+def __check_api_version():
+	"""Check api version - we use some of the new features and at the time of
+	writing this, that version isn't available from pip yet."""
+	version = YAPI.GetAPIVersion()
+	(major, minor, build) = version.split()[0].split('.')
+
+	if int(major) != 1:
+		sys.exit('init error: Major Version mismatch, need "1", full version is "%s"' % version)
+	if int(minor) < 10:
+		sys.exit('init error: Minor Version mismatch, need "10", full version is "%s"' % version)
+
+def __init_api():
+	"""Setup the API to use local USB devices."""
+	errmsg = YRefParam()
+	if YAPI.RegisterHub("usb", errmsg) != YAPI.SUCCESS:
+		sys.exit("init error: %s" % errmsg.value)
+
 def GetMeasurements():
 	"""Enumerates all modules and sensors, reads their current measurements and
 	returns everything as a simple map/list structure. Call this method when you
 	want to use this script from your own python code."""
 
-	# Setup the API to use local USB devices
-	errmsg = YRefParam()
-	if YAPI.RegisterHub("usb", errmsg) != YAPI.SUCCESS:
-		sys.exit("init error: " + errmsg.value)
+	__check_api_version()
+	__init_api()
 
 	modules = __get_modules()
 	result  = __walk_modules(modules)
