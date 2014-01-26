@@ -40,40 +40,14 @@ except ImportError:
 	from yoctopuce.yocto_api import *
 	sys.stderr.write('imported from yocto_api directly - you seem to have the yoctopuce lib from pip\n')
 
-def __walk_function(module, functionNumber):
-	serialNumber = module.get_serialNumber()
-	functionId   = module.functionId(functionNumber)
-	target       = '%s.%s' % (serialNumber, functionId)
-
-	sensor = None
-	if functionId == 'humidity':
-		sensor = YHumidity.FindHumidity(target)
-	if functionId == 'pressure':
-		sensor = YPressure.FindPressure(target)
-	if functionId == 'temperature':
-		sensor = YTemperature.FindTemperature(target)
-
-	result = {}
-	result['functionId'] = functionId
-
-	if sensor != None:
-		result['advertisedValue'] = sensor.get_advertisedValue()
-		result['currentRawValue'] = sensor.get_currentRawValue()
-		result['currentValue']    = sensor.get_currentValue()
-		result['errorMessage']    = sensor.get_errorMessage()
-		result['highestValue']    = sensor.get_highestValue()
-		result['logicalName']     = sensor.get_logicalName()
-		result['lowestValue']     = sensor.get_lowestValue()
-		result['resolution']      = sensor.get_resolution()
-		result['unit']            = sensor.get_unit()
-
-	return result
-
 def __walk_module(module):
 	result = {}
+
 	result['beacon']          = module.get_beacon()
 	result['errorMessage']    = module.get_errorMessage()
+	result['description']     = module.describe()
 	result['firmwareRelease'] = module.get_firmwareRelease()
+	result['hardwareId']      = module.get_hardwareId()
 	result['logicalName']     = module.get_logicalName()
 	result['luminosity']      = module.get_luminosity()
 	result['productId']       = module.get_productId()
@@ -85,32 +59,50 @@ def __walk_module(module):
 	result['usbBandwidth']    = module.get_usbBandwidth()
 	result['usbCurrent']      = module.get_usbCurrent()
 	result['userData']        = module.get_userData()
+	result['sensors']         = {}
 
-	measurements = {}
-	fnCount = module.functionCount()
-	for functionNumber in range(0, fnCount):
-		functionId               = module.functionId(functionNumber)
-		measurements[functionId] = __walk_function(module, functionNumber)
-
-	result['measurements'] = measurements
 	return result
 
-def __walk_modules(modules):
+def __walk_sensor(sensor):
 	result = {}
-	for module in modules:
-		serial         = module.get_serialNumber()
-		result[serial] = __walk_module(module)
+	result['advertisedValue'] = sensor.get_advertisedValue()
+	result['currentRawValue'] = sensor.get_currentRawValue()
+	result['currentValue']    = sensor.get_currentValue()
+	result['description']     = sensor.describe()
+	result['errorMessage']    = sensor.get_errorMessage()
+	result['friendlyName']    = sensor.get_friendlyName()
+	result['functionId']      = sensor.get_functionId()
+	result['hardwareId']      = sensor.get_hardwareId()
+	result['highestValue']    = sensor.get_highestValue()
+	result['logicalName']     = sensor.get_logicalName()
+	result['lowestValue']     = sensor.get_lowestValue()
+	result['resolution']      = sensor.get_resolution()
+	result['unit']            = sensor.get_unit()
+	result['userData']        = sensor.get_userData()
 
 	return result
 
-def __get_modules():
-	modules = []
-	mod = YModule.FirstModule()
-	while mod != None:
-		if mod.isOnline():
-			modules.append(mod)
-		mod = mod.nextModule()
-	return modules
+def __walk_sensors():
+	"""Enumerate all sensors but store them in a hierarchical structur where
+	the module is the parent for the sensor and measurement information."""
+	result = {}
+
+	sensor = YSensor.FirstSensor()
+	while sensor != None:
+		if sensor.isOnline():
+
+			module = sensor.get_module()
+			serial = module.get_serialNumber()
+
+			if not serial in result:
+				result[serial] = __walk_module(module)
+
+			functionId  = sensor.get_functionId();
+			result[serial]['sensors'][functionId] = __walk_sensor(sensor)
+
+		sensor = sensor.nextSensor()
+
+	return result
 
 def __check_api_version():
 	"""Check api version - we use some of the new features and at the time of
@@ -136,10 +128,7 @@ def GetMeasurements():
 
 	__check_api_version()
 	__init_api()
-
-	modules = __get_modules()
-	result  = __walk_modules(modules)
-	return result
+	return __walk_sensors()
 
 def main():
 	"""Main method. Gets all measurements and dumps them as json to stdout."""
