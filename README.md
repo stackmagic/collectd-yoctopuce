@@ -6,11 +6,12 @@ Python Script that can be used with [Collectd](https://collectd.org/)'s
 [Exec plugin](https://collectd.org/wiki/index.php/Plugin:Exec) to read out
 values of your [yoctopuce](https://yoctopuce.com) devices.
 
-Status
-======
+Status/Features
+===============
 
 * this is still a work in progress
 * DONE: enumerate and read all sensors, dump to map/json
+  Have a look at `example_output.json` to see what kind of data you can expect.
 * TODO: integrate with collectd
 
 Instructions (yoctopuce)

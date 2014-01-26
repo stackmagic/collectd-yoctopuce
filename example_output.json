@@ -1,0 +1,70 @@
+{
+    "METEOMK1-19631": {
+        "userData": null,
+        "upTime": 1522376,
+        "logicalName": "",
+        "description": "Module(METEOMK1-19631.module)=METEOMK1-19631.module",
+        "serialNumber": "METEOMK1-19631",
+        "luminosity": 50,
+        "errorMessage": "",
+        "hardwareId": "METEOMK1-19631.module",
+        "productName": "Yocto-Meteo",
+        "firmwareRelease": "14586",
+        "beacon": 0,
+        "rebootCountdown": 0,
+        "productRelease": 1,
+        "sensors": {
+            "pressure": {
+                "userData": null,
+                "currentValue": 954.0,
+                "advertisedValue": "955",
+                "logicalName": "",
+                "currentRawValue": 954.0,
+                "errorMessage": "",
+                "hardwareId": "METEOMK1-19631.pressure",
+                "lowestValue": 952.0,
+                "highestValue": 955.0,
+                "friendlyName": "METEOMK1-19631.pressure",
+                "resolution": 1.0,
+                "functionId": "pressure",
+                "unit": "mbar",
+                "description": "Sensor(METEOMK1-19631.pressure)=METEOMK1-19631.pressure"
+            },
+            "temperature": {
+                "userData": null,
+                "currentValue": 24.6875,
+                "advertisedValue": "24.7",
+                "logicalName": "",
+                "currentRawValue": 24.6875,
+                "errorMessage": "",
+                "hardwareId": "METEOMK1-19631.temperature",
+                "lowestValue": 24.6875,
+                "highestValue": 26.125,
+                "friendlyName": "METEOMK1-19631.temperature",
+                "resolution": 0.0625,
+                "functionId": "temperature",
+                "unit": "'C",
+                "description": "Sensor(METEOMK1-19631.temperature)=METEOMK1-19631.temperature"
+            },
+            "humidity": {
+                "userData": null,
+                "currentValue": 23.0,
+                "advertisedValue": "20",
+                "logicalName": "",
+                "currentRawValue": 23.0,
+                "errorMessage": "",
+                "hardwareId": "METEOMK1-19631.humidity",
+                "lowestValue": 20.0,
+                "highestValue": 24.0,
+                "friendlyName": "METEOMK1-19631.humidity",
+                "resolution": 1.0,
+                "functionId": "humidity",
+                "unit": "% RH",
+                "description": "Sensor(METEOMK1-19631.humidity)=METEOMK1-19631.humidity"
+            }
+        },
+        "usbCurrent": 22,
+        "usbBandwidth": 0,
+        "productId": 24
+    }
+}
