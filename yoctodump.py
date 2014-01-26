@@ -33,12 +33,12 @@
 import sys
 import json
 
-from yoctopuce.yocto_api         import YAPI
-from yoctopuce.yocto_api         import YModule
-from yoctopuce.yocto_api         import YRefParam
-from yoctopuce.yocto_humidity    import YHumidity
-from yoctopuce.yocto_pressure    import YPressure
-from yoctopuce.yocto_temperature import YTemperature
+try:
+	from yocto_api import *
+	sys.stderr.write('imported from yocto_api directly - you seem to have the yoctopuce lib installed manually\n')
+except ImportError:
+	from yoctopuce.yocto_api import *
+	sys.stderr.write('imported from yocto_api directly - you seem to have the yoctopuce lib from pip\n')
 
 def __walk_function(module, functionNumber):
 	serialNumber = module.get_serialNumber()
