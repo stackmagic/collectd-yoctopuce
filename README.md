@@ -42,3 +42,24 @@ Instructions (collectd)
 =======================
 
 TODO
+
+Troubleshooting
+===============
+
+Insufficient Permissions
+------------------------
+
+    init error: the user has insufficient permissions to access USB devices (ypkt_lin:312)
+
+You either forgot to add the `/etc/udev/rules.d` file at all or you may need
+to give it a higher number (yoctopuce's examples use 51) so it's executed
+later. It can happen that some other rules are executed after your own rules,
+changing the permissions so you can't write.
+
+* Unplug the device
+* Execute `udevadm monitor`
+* Connect the device and note the shortest path printed, e.g. `/devices/pci0000:00/0000:00:14.0/usb3/3-1`
+* Execute `udevadm test /devices/pci0000:00/0000:00:14.0/usb3/3-1`
+* Look for lines starting with `MODE` to see what other rules are setting permissions on the file
+* Rename your rules file accordingly
+* Restart udev and re-connect the device. It should work now.
