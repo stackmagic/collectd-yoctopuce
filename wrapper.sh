@@ -24,6 +24,11 @@
 
 set -e
 
+# get script dir (http://stackoverflow.com/a/246128/738323)
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd "${DIR}" >&2
+
 if [ ! -d "yoctolib_python" ]; then
 	git clone https://github.com/yoctopuce/yoctolib_python.git yoctolib_python >&2
 	pushd yoctolib_python                                                      >&2
@@ -32,6 +37,6 @@ if [ ! -d "yoctolib_python" ]; then
 fi
 
 # temporary until pip sports the latest version (1.10)
-export PYTHONPATH="$(pwd)/yoctolib_python/Sources"
+export PYTHONPATH="${DIR}/yoctolib_python/Sources"
 
-$(pwd)/collectd-yoctopuce.py
+${DIR}/collectd-yoctopuce.py

@@ -44,7 +44,15 @@ the downloads are available in their news post
 Instructions (collectd)
 =======================
 
-TODO
+In the collectd config, simply add the Exec plugin:
+
+    LoadPlugin exec
+
+Then make sure the wrapper script is called:
+
+    <Plugin exec>
+        Exec "SOMEUSER:SOMEGROUP" "/home/SOMEUSER/collectd-yoctopuce/wrapper.sh"
+    </Plugin>
 
 Troubleshooting
 ===============
