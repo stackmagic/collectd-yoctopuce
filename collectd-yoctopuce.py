@@ -41,13 +41,12 @@ data = yoctodump.GetMeasurements()
 
 for moduleData in data.values():
 
-	modName = moduleData['logicalName']
-	if modName == '':
-		modName = moduleData['serialNumber']
+        modName = moduleData['logicalName']
+        if modName == '':
+                modName = moduleData['serialNumber'].replace('-', '_')
 
-	for sensor in moduleData['sensors'].values():
+        for sensor in moduleData['sensors'].values():
 
-		senName = sensor['functionId']
-		senVal  = sensor['advertisedValue']
-		print 'PUTVAL %s/exec-yoctopuce_%s/gauge-%s interval=%s N:%s' % (host, modName, senName, ival, senVal)
-
+                senName = sensor['functionId']
+                senVal  = sensor['advertisedValue']
+                print 'PUTVAL %s/yoctopuce-%s/gauge-%s interval=%s N:%s' % (host, modName, senName, ival, senVal)
