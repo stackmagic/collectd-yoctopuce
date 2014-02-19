@@ -59,6 +59,9 @@ to give it a higher number (yoctopuce's examples use 51) so it's executed
 later. It can happen that some other rules are executed after your own rules,
 changing the permissions so you can't write.
 
+Don't forget to disconnect and re-connect the device just after adding your
+rules and restarting udevd.
+
 * Unplug the device
 * Execute `udevadm monitor`
 * Connect the device and note the shortest path printed, e.g. `/devices/pci0000:00/0000:00:14.0/usb3/3-1`
