@@ -49,5 +49,5 @@ for moduleData in data.values():
 
 		senName = sensor['functionId']
 		senVal  = sensor['advertisedValue']
-		print 'PUTVAL %s/yoctopuce-%s/gauge-%s interval=%s N:%s' % (host, modName, senName, ival, senVal)
+		print 'PUTVAL %s/exec-yoctopuce_%s/gauge-%s interval=%s N:%s' % (host, modName, senName, ival, senVal)
 
