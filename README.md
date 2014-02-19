@@ -31,8 +31,10 @@ Install the yoctopuce library (as soon as the version in pip is at least
 
 	pip install yoctopuce
 
-If the version in pip is still too old, install the python library as
-instructed by yoctopuce and add the `Sources` directory to your `PYTHONPATH`.
+Right now, the version in pip is still too old. Therefore the wrapper script
+will automatically pull the latest dev version from the yoctopuce github repo,
+add it to the `PYTHONPATH` and you're set to go. Just use the `wrapper.sh`
+script.
 
 Make sure the firmware on your yocto module(s) match the api version. You
 can upgrade the firmware using their VirtualHub software. More information and

@@ -115,9 +115,9 @@ def __check_api_version():
 	(major, minor, build) = version.split()[0].split('.')
 
 	if int(major) != 1:
-		sys.exit('init error: Major Version mismatch, need "1", full version is "%s"' % version)
+		sys.exit('init error: Major Version mismatch, need major version "1" for "1.10+", your current version is "%s"' % version)
 	if int(minor) < 10:
-		sys.exit('init error: Minor Version mismatch, need "10", full version is "%s"' % version)
+		sys.exit('init error: Minor Version mismatch, need minor version "10" for "1.10+", your current version is "%s"' % version)
 
 def __init_api():
 	"""Setup the API to use local USB devices."""

@@ -1,3 +1,7 @@
+
+# for beta version, checked out by wrapper script
+yoctolib_python
+
 *.py[cod]
 
 # C extensions
