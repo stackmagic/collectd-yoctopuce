@@ -18,7 +18,7 @@ Instructions (yoctopuce)
 ========================
 
 Set up your yoctopuce device as described in the
-[yoctopuce docs](https://github.com/yoctopuce/yoctolib_python/tree/master/Documentation)
+[yoctopuce docs](https://www.yoctopuce.com/EN/products/virtualhub/doc/VIRTHUB0.usermanual.html)
 and make sure it works.
 
 If you want, give your devices a pretty name (using the
