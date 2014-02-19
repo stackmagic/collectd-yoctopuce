@@ -3,6 +3,7 @@
 yoctolib_python
 
 *.py[cod]
+*.log
 
 # C extensions
 *.so

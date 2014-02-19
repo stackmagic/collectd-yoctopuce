@@ -27,13 +27,22 @@ set -e
 # get script dir (http://stackoverflow.com/a/246128/738323)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-pushd "${DIR}" >&2
+# script cannot output anything else besides the collectd text protocol so
+# we write all other output into a log file
+LOG="${DIR}/wrapper.log"
+
+pushd "${DIR}" >>${LOG}
+
+# make sure the log doesn't grow too large (10MB)
+if [ $(stat -c%s "wrapper.log") -gt 10485760 ]; then
+	> "${LOG}"
+fi
 
 if [ ! -d "yoctolib_python" ]; then
-	git clone https://github.com/yoctopuce/yoctolib_python.git yoctolib_python >&2
-	pushd yoctolib_python                                                      >&2
-	git checkout "v1.10.beta"                                                  >&2
-	popd                                                                       >&2
+	git clone https://github.com/yoctopuce/yoctolib_python.git yoctolib_python >>${LOG}
+	pushd yoctolib_python                                                      >>${LOG}
+	git checkout "v1.10.beta"                                                  >>${LOG}
+	popd                                                                       >>${LOG}
 fi
 
 # temporary until pip sports the latest version (1.10)
