@@ -33,12 +33,16 @@
 import sys
 import json
 
+isMain = __name__ == '__main__'
+
 try:
 	from yocto_api import *
-	sys.stderr.write('imported from yocto_api directly - you seem to have the yoctopuce lib installed manually\n')
+	if isMain:
+		sys.stderr.write('imported from yocto_api directly - you seem to have the yoctopuce lib installed manually\n')
 except ImportError:
 	from yoctopuce.yocto_api import *
-	sys.stderr.write('imported from yocto_api directly - you seem to have the yoctopuce lib from pip\n')
+	if isMain:
+		sys.stderr.write('imported from yocto_api directly - you seem to have the yoctopuce lib from pip\n')
 
 def __walk_module(module):
 	result = {}
@@ -135,5 +139,5 @@ def main():
 	result  = GetMeasurements()
 	print json.dumps(result, ensure_ascii=True, indent=4)
 
-if __name__ == '__main__':
+if isMain:
 	sys.exit(main())
