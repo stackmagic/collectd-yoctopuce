@@ -27,7 +27,7 @@ set -e
 if [ ! -d "yoctolib_python" ]; then
 	git clone https://github.com/yoctopuce/yoctolib_python.git yoctolib_python >&2
 	pushd yoctolib_python                                                      >&2
-	git co "v1.10.beta"                                                        >&2
+	git checkout "v1.10.beta"                                                  >&2
 	popd                                                                       >&2
 fi
 
