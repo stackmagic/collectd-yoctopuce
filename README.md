@@ -44,15 +44,24 @@ the downloads are available in their news post
 Instructions (collectd)
 =======================
 
-In the collectd config, simply add the Exec plugin:
+In the collectd config, you'll need to reference the yoctopuce types, like so:
+
+    TypesDB "/usr/share/collectd/types.db" "/home/SOMEUSER/collectd-yoctopuce/yoctopuce_collectd_types.db"
+
+Add the Exec plugin:
 
     LoadPlugin exec
 
-Then make sure the wrapper script is called:
+Make sure the wrapper script is called:
 
     <Plugin exec>
         Exec "SOMEUSER:SOMEGROUP" "/home/SOMEUSER/collectd-yoctopuce/wrapper.sh"
     </Plugin>
+
+And restart collectd
+
+    service collectd restart
+
 
 Troubleshooting
 ===============
