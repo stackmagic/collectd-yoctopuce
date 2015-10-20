@@ -86,7 +86,7 @@ def __walk_sensor(sensor):
 	return result
 
 def __walk_sensors():
-	"""Enumerate all sensors but store them in a hierarchical structur where
+	"""Enumerate all sensors but store them in a hierarchical structure where
 	the module is the parent for the sensor and measurement information."""
 	result = {}
 
@@ -100,7 +100,7 @@ def __walk_sensors():
 			if not serial in result:
 				result[serial] = __walk_module(module)
 
-			functionId  = sensor.get_functionId();
+			functionId = sensor.get_functionId();
 			result[serial]['sensors'][functionId] = __walk_sensor(sensor)
 
 		sensor = sensor.nextSensor()
