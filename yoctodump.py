@@ -60,7 +60,6 @@ def __walk_module(module):
 	result['rebootCountdown'] = module.get_rebootCountdown()
 	result['serialNumber']    = module.get_serialNumber()
 	result['upTime']          = module.get_upTime()
-	result['usbBandwidth']    = module.get_usbBandwidth()
 	result['usbCurrent']      = module.get_usbCurrent()
 	result['userData']        = module.get_userData()
 	result['sensors']         = {}
