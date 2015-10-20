@@ -66,6 +66,15 @@ And restart collectd
 Troubleshooting
 ===============
 
+Device doesn't show up
+----------------------
+
+When you plug in the device, `dmesg` should print a line like this:
+
+    hid-generic 0003:24E0:0018.0003: hiddev0,hidraw1: USB HID v1.11 Device [Yoctopuce Yocto-Meteo] on usb-0000:00:14.0-1/input0
+
+If that doesn't happen, make sure the `usbserial` kernel module is loaded by executing `modprobe usbserial` as root.
+
 Insufficient Permissions
 ------------------------
 
