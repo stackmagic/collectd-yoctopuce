@@ -111,6 +111,7 @@ def __check_api_version():
 	"""Check api version - we use some of the new features and at the time of
 	writing this, that version isn't available from pip yet."""
 	version = YAPI.GetAPIVersion()
+	sys.stderr.write('yoctopuce api version: %s\n' % version)
 	(major, minor, build) = version.split()[0].split('.')
 
 	if int(major) != 1:
