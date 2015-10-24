@@ -35,14 +35,7 @@ import json
 
 isMain = __name__ == '__main__'
 
-try:
-	from yocto_api import *
-	if isMain:
-		sys.stderr.write('imported from yocto_api directly - you seem to have the yoctopuce lib installed manually\n')
-except ImportError:
-	from yoctopuce.yocto_api import *
-	if isMain:
-		sys.stderr.write('imported from yocto_api directly - you seem to have the yoctopuce lib from pip\n')
+from yoctopuce.yocto_api import *
 
 def __walk_module(module):
 	result = {}
@@ -111,7 +104,6 @@ def __check_api_version():
 	"""Check api version - we use some of the new features and at the time of
 	writing this, that version isn't available from pip yet."""
 	version = YAPI.GetAPIVersion()
-	sys.stderr.write('yoctopuce api version: %s\n' % version)
 	(major, minor, build) = version.split()[0].split('.')
 
 	if int(major) != 1:
