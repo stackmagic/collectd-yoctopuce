@@ -24,21 +24,27 @@
 # - 2: The broker/client will deliver the message exactly once by using a four step handshake.
 #
 
-import paho.mqtt.client as mqtt
+# pip install RPi.GPIO
+# pip install paho-mqtt
+
+import paho.mqtt.client as paho
 import time
 import yoctodump
 
-host = 'localhost'
-port = 1883
+host     = 'localhost'
+port     = 1883
+clientId = 'mqtt_yoctopuce'
 
-mqttClient = mqtt.Client()
-mqttClient.connect(host, port)
+client = paho.Client(client_id = clientId, protocol = paho.MQTTv31)
+client.connect(host, port)
+client.loop_start()
 
 data = yoctodump.GetMeasurements()
 
 for moduleData in data.values():
 
     modName = moduleData['logicalName']
+
     if modName == '':
         modName = moduleData['serialNumber'].replace('-', '_')
 
@@ -48,14 +54,15 @@ for moduleData in data.values():
         senVal  = sensor['advertisedValue']
         topic = 'yoctopuce/%s/%s' % (modName, senName)
 
-        (result, mid) = mqttClient.publish(topic, senVal)
+        (result, mid) = client.publish(topic, senVal)
         print '>>> %s = %s' % (topic, senVal)
 
 # need to sleep so messages get through
 # all attempts at using on_publish and recording
 # whats pending and whats been sent have failed
-time.sleep(1)
+time.sleep(0.1)
 
 # done
-mqttClient.disconnect()
+client.disconnect()
+
 
